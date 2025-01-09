@@ -4,27 +4,28 @@
 --- MOD_AUTHOR: [Lyman]
 --- MOD_DESCRIPTION: Mod Compatibility Pack for Fusion Jokers
 --- PRIORITY: 13379001
+--- PREFIX: jestobio
 
 ----------------------------------------------
 ------------MOD CODE -------------------------
 
 -- #### Check for Loaded Mods ####
 -- Fusion Jokers
-is_fusionJokers = not (SMODS.INIT.FusionJokers == nil)
+is_fusionJokers = (SMODS.Mods["FusionJokers"] or {}).can_load
 -- Jank Jonklers
-is_jankJonklers = not (SMODS.INIT.JankJonklersMod == nil)
+is_jankJonklers = (SMODS.Mods["JankJonklersMod"] or {}).can_load
 -- Myst Jokers
-is_mystJokers = not (SMODS.INIT.MystJokers == nil)
+is_mystJokers = (SMODS.Mods["MystJokers"] or {}).can_load
 -- MoreFluff
-is_moreFluff = not (SMODS.INIT.MoreFluff == nil)
+is_moreFluff = (SMODS.Mods["MoreFluff"] or {}).can_load
 -- AutumnCircus
-is_autumnCircus = not (SMODS.INIT.TheAutumnCircus == nil)
+is_autumnCircus = false
 -- SDM_0's Stuff
-is_SDM = not (SMODS.INIT.sdm_0s_stuff == nil)
+is_SDM = (SMODS.Mods["sdm0sstuff"] or {}).can_load
 -- Codex Arcanum
-is_codexArcanum = not (SMODS.INIT.CodexArcanum == nil)
+is_codexArcanum = (SMODS.Mods["CodexArcanum"] or {}).can_load
 -- Bunco
-is_bunco = not (SMODS.INIT.Bunco == nil)
+is_bunco = (SMODS.Mods["Bunco"] or {}).can_load
 
 local config = {
     j_f_big_loser = true,
@@ -97,7 +98,7 @@ function SMODS.INIT.Jestobiology()
                     dollars = 4,
                     poker_hand = "High Card", }
             },
-            rarity = 5,
+            rarity = "fusion",
             cost = 10,
             unlocked = true,
             discovered = true,
@@ -155,7 +156,7 @@ function SMODS.INIT.Jestobiology()
                     x_mult = 3,
                 }
             },
-            rarity = 5,
+            rarity = "fusion",
             cost = 10,
             unlocked = true,
             discovered = true,
@@ -206,7 +207,7 @@ function SMODS.INIT.Jestobiology()
                     dollars = 3
                 }
             },
-            rarity = 5,
+            rarity = "fusion",
             cost = 8,
             unlocked = true,
             discovered = true,
@@ -253,7 +254,7 @@ function SMODS.INIT.Jestobiology()
                     used = false,
                 }
             },
-            rarity = 5,
+            rarity = "fusion",
             cost = 10,
             unlocked = true,
             discovered = true,
@@ -321,7 +322,7 @@ function SMODS.INIT.Jestobiology()
                     counter = 2
                 }
             },
-            rarity = 5,
+            rarity = "fusion",
             cost = 16,
             unlocked = true,
             discovered = true,
@@ -404,7 +405,7 @@ function SMODS.INIT.Jestobiology()
                     mult = 10
                 }
             },
-            rarity = 5,
+            rarity = "fusion",
             cost = 8,
             unlocked = true,
             discovered = true,
@@ -462,7 +463,7 @@ function SMODS.INIT.Jestobiology()
                     chips = 0
                 }
             },
-            rarity = 5,
+            rarity = "fusion",
             cost = 8,
             unlocked = true,
             discovered = true,
@@ -512,7 +513,7 @@ function SMODS.INIT.Jestobiology()
                     x_mult = 1.5
                 }
             },
-            rarity = 5,
+            rarity = "fusion",
             cost = 8,
             unlocked = true,
             discovered = true,
@@ -559,7 +560,7 @@ function SMODS.INIT.Jestobiology()
                     odds = 3
                 }
             },
-            rarity = 5,
+            rarity = "fusion",
             cost = 10,
             unlocked = true,
             discovered = true,
@@ -607,7 +608,7 @@ function SMODS.INIT.Jestobiology()
                     mult = 0
                 }
             },
-            rarity = 5,
+            rarity = "fusion",
             cost = 10,
             unlocked = true,
             discovered = true,
@@ -624,8 +625,8 @@ function SMODS.INIT.Jestobiology()
         SMODS.Jokers.j_f_original_character.calculate = function(self, context)
             if context.joker_main and context.cardarea == G.jokers and self.ability.extra.mult >= 0 then
                 return {
-                    message = localize { type = 'variable', key = 'a_mult', vars = { self.ability.extra } },
-                    mult_mod = self.ability.extra,
+                    message = localize { type = 'variable', key = 'a_mult', vars = { self.ability.extra.mult } },
+                    mult_mod = self.ability.extra.mult,
                 }
             end
         end
@@ -638,22 +639,22 @@ function SMODS.INIT.Jestobiology()
         FusionJokers.fusions:add_fusion("j_shock_humor", nil, false, "j_faceless", nil, false, "j_f_electric_chair", 10)
     end
     if is_jankJonklers then
-        FusionJokers.fusions:add_fusion("j_todo_list", nil, false, "j_impractical", nil, false, "j_f_big_loser", 10)
-        FusionJokers.fusions:add_fusion("j_acrobat", nil, false, "j_chalk_outline", nil, false, "j_f_tightrope", 10)
+        FusionJokers.fusions:add_fusion("j_todo_list", nil, false, "j_jank_impractical", nil, false, "j_f_big_loser", 10)
+        FusionJokers.fusions:add_fusion("j_acrobat", nil, false, "j_jank_chalk_outline", nil, false, "j_f_tightrope", 10)
     end
     if is_codexArcanum and is_jankJonklers then
-        FusionJokers.fusions:add_fusion("j_studious_joker", nil, false, "j_pawn", nil, false, "j_f_commercial_chemist", 8)
+        FusionJokers.fusions:add_fusion("j_studious_joker", nil, false, "j_jank_pawn", nil, false, "j_f_commercial_chemist", 8)
     end
     if is_jankJonklers and is_moreFluff then
-        FusionJokers.fusions:add_fusion("j_sunday_funnies", nil, false, "j_mf_pipe", nil, false, "j_f_monday_menace", 16)
-        FusionJokers.fusions:add_fusion("j_mf_simplified", nil, false, "j_minimalist", nil, false, "j_f_typography", 8)
-        FusionJokers.fusions:add_fusion("j_expanded_art", nil, false, "j_mf_clownfish", nil, false, "j_f_fishclown", 8)
+        FusionJokers.fusions:add_fusion("j_jank_sunday_funnies", nil, false, "j_mf_philosophical", nil, false, "j_f_monday_menace", 16)
+        FusionJokers.fusions:add_fusion("j_mf_simplified", nil, false, "j_jank_minimalist", nil, false, "j_f_typography", 8)
+        FusionJokers.fusions:add_fusion("j_jank_expanded_art", nil, false, "j_mf_clownfish", nil, false, "j_f_fishclown", 8)
     end
     if is_bunco and is_jankJonklers then
-        FusionJokers.fusions:add_fusion("j_shepherd", "chips", false, "j_pitiful", nil, false, "j_f_party_animal", 8)
+        FusionJokers.fusions:add_fusion("j_bunc_shepherd", "chips", false, "j_jank_pitiful", nil, false, "j_f_party_animal", 8)
     end
     if is_mystJokers then
-        FusionJokers.fusions:add_fusion("j_stencil", nil, false, "j_autism_creature", nil, false, "j_f_original_character", 18)
+        FusionJokers.fusions:add_fusion("j_stencil", nil, false, "j_myst_autism_creature", nil, false, "j_f_original_character", 18)
     end
 end
 
@@ -701,7 +702,7 @@ function Card.update(self, dt)
         if self.config.center.key == "j_f_original_character" then
             self.ability.extra.mult = (G.jokers.config.card_limit - #G.jokers.cards) * 12
             for i = 1, #G.jokers.cards do
-                if G.jokers.cards[i].ability.name == 'Joker Stencil' then self.ability.extra = self.ability.extra + 6 end
+                if G.jokers.cards[i].ability.name == 'Joker Stencil' then self.ability.extra.mult = self.ability.extra.mult + 6 end
             end
         end
     end
